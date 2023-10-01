@@ -1,6 +1,11 @@
 #RequireAdmin
-HotKeySet("{F1}","MyExit")
-HotKeySet("{F2}","Test")
+HotKeySet("{F1}","myExit")
+HotKeySet("{F2}","test1")
+HotKeySet("{F3}","test2")
+HotKeySet("{F4}","test3")
+
+;configs (TODO: read from config file)
+$rustWindowName = "*Untitled - Notepad"
 
 #include <ButtonConstants.au3>
 #include <EditConstants.au3>
@@ -71,10 +76,11 @@ $Checkbox26 = GUICtrlCreateCheckbox("Small Sharks", 134, 197, 97, 17)
 $Checkbox27 = GUICtrlCreateCheckbox("Small Trout", 134, 213, 97, 17)
 $Checkbox28 = GUICtrlCreateCheckbox("Yellow Perch", 134, 229, 97, 17)
 GUICtrlCreateGroup("", -99, -99, 1, 1)
-$Group6 = GUICtrlCreateGroup("Up-cycle trouts?", 128, 256, 97, 41)
-$Radio3 = GUICtrlCreateRadio("Yes", 136, 272, 41, 17)
+$Group6 = GUICtrlCreateGroup("Up-cycle", 152, 256, 73, 57)
+$Checkbox29 = GUICtrlCreateCheckbox("Trout", 160, 272, 49, 17)
 GUICtrlSetState(-1, $GUI_CHECKED)
-$Radio4 = GUICtrlCreateRadio("No", 184, 272, 113, 17)
+$Checkbox30 = GUICtrlCreateCheckbox("Salmon", 160, 288, 57, 17)
+GUICtrlSetState(-1, $GUI_CHECKED)
 GUICtrlCreateGroup("", -99, -99, 1, 1)
 $TabSheet2 = GUICtrlCreateTabItem("TabSheet2")
 GUICtrlCreateTabItem("")
@@ -115,27 +121,71 @@ While 1
 	EndSwitch
 WEnd
 
-func Test()
-	local $currOcrID = $oDict.Item("ocrID")
-	_ScreenCapture_CaptureWnd(@WorkingDir & "\ocr.jpg", "*Untitled - Notepad", 0, 0, -1, -1, False)
-	$currOcrID = $currOcrID+1
+func ocrRectWaitUntil($x, $y, $w, $h, $timeOut)
+	local $currOcrID = $oDict.Item("ocrID")+1
+	_ScreenCapture_CaptureWnd(@WorkingDir & "\ocr"&$currOcrID&".jpg", $rustWindowName, $x, $y, $w, $h, False)
 	$oDict.Item("ocrID") = $currOcrID
 	$error = True
-	For $i = 0 To 10 Step +1
-		sleep(1000)
-		if($oDict.Item("ocrID") <> $currOcrID) Then
-			$i = 10
+	For $i = 0 To $timeOut Step +1
+		sleep(100)
+		if($oDict.Item("ocrIDComplete") >= $currOcrID) Then
+			$i = $timeOut
 			$error = False
 		EndIf
 	Next
 	if($error) then
-		MsgBox("", "Error", $oDict.Item("ocrID"))
+		FileDelete(String("ocr"&$currOcrID&".jpg"))
+		return "ERROR192939"
 	Else
-		MsgBox("", "Success", $oDict.Item("ocrString"))
+		FileDelete(String("ocr"&$currOcrID&".jpg"))
+		return $oDict.Item(String($currOcrID&"string"))
 	EndIf
 EndFunc
 
-func MyExit()
+func ocrRectAsync($x, $y, $w, $h)
+	local $currOcrID = $oDict.Item("ocrID")+1
+	_ScreenCapture_CaptureWnd(@WorkingDir & "\ocr"&$currOcrID&".jpg", $rustWindowName, $x, $y, $w, $h, False)
+	$oDict.Item("ocrID") = $currOcrID
+	Return $currOcrID
+EndFunc
+
+func ocrRectAwait($id, $timeOut)
+	$error = True
+	For $i = 0 To $timeOut Step +1
+		if($oDict.Item("ocrIDComplete") >= $id) Then
+			$i = $timeOut
+			$error = False
+		EndIf
+		sleep(100)
+	Next
+	if($error) then
+		FileDelete(String("ocr"&$id&".jpg"))
+		return "ERROR192939"
+	Else
+		FileDelete(String("ocr"&$id&".jpg"))
+		return $oDict.Item(String($id&"string"))
+	EndIf
+EndFunc
+
+func test3()
+	MsgBox(1, "OCR", ocrRectAwait(1, 100))
+EndFunc
+
+func test2()
+	$ocrID = ocrRectAsync(0, 0, -1, -1)
+	MsgBox(1, "OCR", ocrRectAwait($ocrID, 100))
+EndFunc
+
+func test1()
+	$ocrText = ocrRectWaitUntil(0, 0, -1, -1, 100)
+	if($ocrText == "ERROR192939") Then
+		MsgBox(1, "ERROR", "OCR ERROR")
+	Else
+		MsgBox(1, "OCR", $ocrText)
+	EndIf
+EndFunc
+
+func myExit()
 	ProcessClose("python.exe")
 	ProcessClose("ipc_server.exe")
 	Exit

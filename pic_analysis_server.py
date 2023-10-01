@@ -36,7 +36,6 @@ mean_y = 0
 ocr.pytesseract.tesseract_cmd = r'C:\Users\liamw\AppData\Local\Programs\Tesseract-OCR\tesseract.exe' #TODO: read from config file
 tessdata_dir_config = '--tessdata-dir "C:/Users/liamw/AppData/Local/Programs/Tesseract-OCR/tessdata"' #TODO: read from config file
 switch = 0
-ocrID = 0
 
 def on_low_H_thresh_trackbar(val):
     global low_H
@@ -121,16 +120,18 @@ def img_prep(img):
 
 # Get default ROT-object (Dictionary object) from IPC server
 oDict = win32com.client.GetObject( "DataTransferObject" )
-oDict["ocrID"] = ocrID
+oDict["ocrID"] = 0
 oDict["ocrString"] = ""
+oDict["ocrIDComplete"] = 0
 
 while True:
-    dbShowUI = oDict( "tackleUI" ) # Get AutoIt tackleUI bool as bool
+    dbShowUI = oDict("tackleUI") # Get AutoIt tackleUI bool as bool
     
-    if(ocrID != oDict["ocrID"]): #Is there a new img to ocr?
-        oDict["ocrString"] = ocr_img(img_prep(cv.imread("ocr.jpg"))).replace('"', '').replace("'", '').replace('“', '').replace('‘','').replace('\n', ' ')
-        oDict["ocrID"] += 1
-        ocrID = oDict["ocrID"]
+    latestOcrID = oDict["ocrID"]
+    completedOcrID = oDict["ocrIDComplete"]
+    if(latestOcrID > completedOcrID): #Is there a new img to ocr?
+        oDict[f"{completedOcrID+1}string"] = ocr_img(img_prep(cv.imread(f'ocr{completedOcrID+1}.jpg'))).replace('"', '').replace("'", '').replace('“', '').replace('‘','').replace('\n', ' ')
+        oDict["ocrIDComplete"] = completedOcrID+1
     
     if(dbShowUI):
         cv.namedWindow(window_detection_name, cv.WINDOW_AUTOSIZE)
@@ -145,10 +146,11 @@ while True:
         while True:
             sct_img = sct.grab(bounding_box)
             
-            if(ocrID != oDict["ocrID"]): #Is there a new img to ocr?
-                oDict["ocrString"] = ocr_img(img_prep(cv.imread("ocr.jpg"))).replace('"', '').replace("'", '').replace('“', '').replace('‘','').replace('\n', ' ')
-                oDict["ocrID"] += 1
-                ocrID = oDict["ocrID"]
+            latestOcrID = oDict["ocrID"]
+            completedOcrID = oDict["ocrIDComplete"]
+            if(latestOcrID > completedOcrID): #Is there a new img to ocr?
+                oDict[f"{completedOcrID+1}string"] = ocr_img(img_prep(cv.imread(f'ocr{completedOcrID+1}.jpg'))).replace('"', '').replace("'", '').replace('“', '').replace('‘','').replace('\n', ' ')
+                oDict["ocrIDComplete"] = completedOcrID+1
 
             scale_percent_width = 40  # percent of original size
             scale_percent_height = 40  # percent of original size
