@@ -6,7 +6,7 @@ import cv2 as cv
 import win32com.client
 import numpy as np
 
-bounding_box = {'top': 0, 'left': 0, 'width': 1920, 'height': 1080}
+bounding_box = {'top': 0, 'left': 0, 'width': 1920, 'height': 1080} #TODO: read from config file
 sct = mss()
 max_value = 255
 max_value_H = 360 // 2
@@ -23,16 +23,20 @@ low_V_name = 'Low V'
 high_H_name = 'High H'
 high_S_name = 'High S'
 high_V_name = 'High V'
-default_low_H = 0
+
+default_low_H = 0 #TODO: read defaults from config file
 default_high_H = 180
 default_low_S = 96
 default_high_S = 255
 default_low_V = 193
 default_high_V = 255
+
 mean_x = 0
 mean_y = 0
-ocr.pytesseract.tesseract_cmd = r'C:\Users\liamw\AppData\Local\Programs\Tesseract-OCR\tesseract.exe'
-tessdata_dir_config = '--tessdata-dir "C:/Users/liamw/AppData/Local/Programs/Tesseract-OCR/tessdata"'
+ocr.pytesseract.tesseract_cmd = r'C:\Users\liamw\AppData\Local\Programs\Tesseract-OCR\tesseract.exe' #TODO: read from config file
+tessdata_dir_config = '--tessdata-dir "C:/Users/liamw/AppData/Local/Programs/Tesseract-OCR/tessdata"' #TODO: read from config file
+switch = 0
+ocrID = 0
 
 def on_low_H_thresh_trackbar(val):
     global low_H
@@ -81,6 +85,30 @@ def on_high_V_thresh_trackbar(val):
     high_V = max(high_V, low_V + 1)
     cv.setTrackbarPos(high_V_name, window_detection_name, high_V)
 
+def on_switch_thresh_trackbar(val):
+    global switch
+    global low_H
+    global high_H
+    global low_S
+    global high_S
+    global low_V
+    global high_V
+    global default_low_H
+    global default_high_H
+    global default_low_S
+    global default_high_S
+    global default_low_V
+    global default_high_V
+    default_low_H = low_H
+    default_high_H = high_H
+    default_low_S = low_S
+    default_high_S = high_S
+    default_low_V = low_V
+    default_high_V = high_V
+    #TODO: save defaults to config file
+    switch = val
+    cv.setTrackbarPos("Switch", window_detection_name, switch)
+
 def ocr_img(img):
     text = ocr.image_to_string(img, config=tessdata_dir_config)
     return text
@@ -89,13 +117,20 @@ def img_prep(img):
     img = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
     img = cv.threshold(img, 0, 255, cv.THRESH_BINARY + cv.THRESH_OTSU)[1]
     #img = cv.medianBlur(img, 5)
-    return img
+    return np.array(img)
 
 # Get default ROT-object (Dictionary object) from IPC server
 oDict = win32com.client.GetObject( "DataTransferObject" )
-    
+oDict["ocrID"] = ocrID
+oDict["ocrString"] = ""
+
 while True:
     dbShowUI = oDict( "tackleUI" ) # Get AutoIt tackleUI bool as bool
+    
+    if(ocrID != oDict["ocrID"]): #Is there a new img to ocr?
+        oDict["ocrString"] = ocr_img(img_prep(cv.imread("ocr.jpg"))).replace('"', '').replace("'", '').replace('“', '').replace('‘','').replace('\n', ' ')
+        oDict["ocrID"] += 1
+        ocrID = oDict["ocrID"]
     
     if(dbShowUI):
         cv.namedWindow(window_detection_name, cv.WINDOW_AUTOSIZE)
@@ -105,9 +140,15 @@ while True:
         cv.createTrackbar(high_S_name, window_detection_name, default_high_S, max_value, on_high_S_thresh_trackbar)
         cv.createTrackbar(low_V_name, window_detection_name, default_low_V, max_value, on_low_V_thresh_trackbar)
         cv.createTrackbar(high_V_name, window_detection_name, default_high_V, max_value, on_high_V_thresh_trackbar)
+        cv.createTrackbar("Switch", window_detection_name, 0, 1, on_switch_thresh_trackbar)
 
         while True:
             sct_img = sct.grab(bounding_box)
+            
+            if(ocrID != oDict["ocrID"]): #Is there a new img to ocr?
+                oDict["ocrString"] = ocr_img(img_prep(cv.imread("ocr.jpg"))).replace('"', '').replace("'", '').replace('“', '').replace('‘','').replace('\n', ' ')
+                oDict["ocrID"] += 1
+                ocrID = oDict["ocrID"]
 
             scale_percent_width = 40  # percent of original size
             scale_percent_height = 40  # percent of original size

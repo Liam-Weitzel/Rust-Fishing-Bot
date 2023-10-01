@@ -1,5 +1,6 @@
 #RequireAdmin
 HotKeySet("{F1}","MyExit")
+HotKeySet("{F2}","Test")
 
 #include <ButtonConstants.au3>
 #include <EditConstants.au3>
@@ -7,7 +8,8 @@ HotKeySet("{F1}","MyExit")
 #include <StaticConstants.au3>
 #include <TabConstants.au3>
 #include <WindowsConstants.au3>
-#Region ### START Koda GUI section ### Form=C:\Users\liamw\Desktop\Rust fishing bot\gui.kxf
+#include <ScreenCapture.au3>
+#Region ### START Koda GUI section ### Form=c:\users\liamw\desktop\rust_fishing_bot\gui.kxf
 $Form1 = GUICreate("Rust Fishing Bot", 383, 396, 240, 123)
 $Tab1 = GUICtrlCreateTab(8, 8, 369, 377)
 $TabSheet1 = GUICtrlCreateTabItem("TabSheet1")
@@ -49,11 +51,9 @@ $Label2 = GUICtrlCreateLabel("Telegram webhook", 240, 104, 95, 17)
 GUICtrlCreateInput("", 240, 80, 121, 21)
 GUICtrlCreateInput("", 240, 120, 121, 21)
 GUICtrlCreateGroup("", -99, -99, 1, 1)
-$Button1 = GUICtrlCreateButton("Run", 24, 352, 67, 25)
-$Button2 = GUICtrlCreateButton("Set up tackle detection", 24, 288, 123, 25)
-$Radio3 = GUICtrlCreateRadio("Up-cycle trouts", 24, 264, 113, 17)
-GUICtrlSetState(-1, $GUI_CHECKED)
-$Button4 = GUICtrlCreateButton("Autoit setup wizard", 24, 320, 99, 25)
+$Button1 = GUICtrlCreateButton("Run", 24, 344, 67, 25)
+$Button2 = GUICtrlCreateButton("Set up tackle detection", 24, 304, 123, 25)
+$Button4 = GUICtrlCreateButton("Autoit setup wizard", 24, 264, 99, 25)
 $Group5 = GUICtrlCreateGroup("What should I gut when in need?", 22, 149, 201, 105)
 $Checkbox19 = GUICtrlCreateCheckbox("Anchovy", 30, 165, 97, 17)
 GUICtrlSetState(-1, $GUI_CHECKED)
@@ -71,11 +71,15 @@ $Checkbox26 = GUICtrlCreateCheckbox("Small Sharks", 134, 197, 97, 17)
 $Checkbox27 = GUICtrlCreateCheckbox("Small Trout", 134, 213, 97, 17)
 $Checkbox28 = GUICtrlCreateCheckbox("Yellow Perch", 134, 229, 97, 17)
 GUICtrlCreateGroup("", -99, -99, 1, 1)
+$Group6 = GUICtrlCreateGroup("Up-cycle trouts?", 128, 256, 97, 41)
+$Radio3 = GUICtrlCreateRadio("Yes", 136, 272, 41, 17)
+GUICtrlSetState(-1, $GUI_CHECKED)
+$Radio4 = GUICtrlCreateRadio("No", 184, 272, 113, 17)
+GUICtrlCreateGroup("", -99, -99, 1, 1)
 $TabSheet2 = GUICtrlCreateTabItem("TabSheet2")
 GUICtrlCreateTabItem("")
 GUISetState(@SW_SHOW)
 #EndRegion ### END Koda GUI section ###
-
 
 ;Run the IPC Server
 ShellExecute("ipc_server.exe", "", "", "", @SW_HIDE)
@@ -105,12 +109,33 @@ While 1
 			; Get default ROT-object (Dictionary object)
 			$oDict.Item("tackleUI") = True
 		Case $GUI_EVENT_CLOSE
+			ProcessClose("python.exe")
+			ProcessClose("ipc_server.exe")
 			Exit
 	EndSwitch
 WEnd
 
+func Test()
+	local $currOcrID = $oDict.Item("ocrID")
+	_ScreenCapture_CaptureWnd(@WorkingDir & "\ocr.jpg", "*Untitled - Notepad", 0, 0, -1, -1, False)
+	$currOcrID = $currOcrID+1
+	$oDict.Item("ocrID") = $currOcrID
+	$error = True
+	For $i = 0 To 10 Step +1
+		sleep(1000)
+		if($oDict.Item("ocrID") <> $currOcrID) Then
+			$i = 10
+			$error = False
+		EndIf
+	Next
+	if($error) then
+		MsgBox("", "Error", $oDict.Item("ocrID"))
+	Else
+		MsgBox("", "Success", $oDict.Item("ocrString"))
+	EndIf
+EndFunc
+
 func MyExit()
-	MsgBox(1, "Exit", "Exited")
 	ProcessClose("python.exe")
 	ProcessClose("ipc_server.exe")
 	Exit

@@ -472,7 +472,7 @@
 						<object type="TAButton" name="Button1">
 							<properties>
 								<property name="Left" vt="Int8">12</property>
-								<property name="Top" vt="Int16">319</property>
+								<property name="Top" vt="Int16">311</property>
 								<property name="Width" vt="Int8">67</property>
 								<property name="Height" vt="Int8">25</property>
 								<property name="Caption" vt="String">Run</property>
@@ -487,7 +487,7 @@
 						<object type="TAButton" name="Button2">
 							<properties>
 								<property name="Left" vt="Int8">12</property>
-								<property name="Top" vt="Int16">255</property>
+								<property name="Top" vt="Int16">271</property>
 								<property name="Width" vt="Int8">123</property>
 								<property name="Height" vt="Int8">25</property>
 								<property name="Caption" vt="String">Set up tackle detection</property>
@@ -499,30 +499,14 @@
 							</properties>
 							<components/>
 						</object>
-						<object type="TARadio" name="Radio3">
-							<properties>
-								<property name="Left" vt="Int8">12</property>
-								<property name="Top" vt="Int16">231</property>
-								<property name="Width" vt="Int8">113</property>
-								<property name="Height" vt="Int8">17</property>
-								<property name="Caption" vt="String">Up-cycle trouts</property>
-								<property name="Checked" vt="True">True</property>
-								<property name="TabOrder" vt="Int8">6</property>
-								<property name="TabStop" vt="True">True</property>
-								<property name="CtrlStyle" vt="Int32">1342242825</property>
-								<property name="CtrlExStyle" vt="Int8">0</property>
-								<property name="Resizing" vt="Set">DockHeight</property>
-							</properties>
-							<components/>
-						</object>
 						<object type="TAButton" name="Button4">
 							<properties>
 								<property name="Left" vt="Int8">12</property>
-								<property name="Top" vt="Int16">287</property>
+								<property name="Top" vt="Int16">231</property>
 								<property name="Width" vt="Int8">99</property>
 								<property name="Height" vt="Int8">25</property>
 								<property name="Caption" vt="String">Autoit setup wizard</property>
-								<property name="TabOrder" vt="Int8">7</property>
+								<property name="TabOrder" vt="Int8">6</property>
 								<property name="Color" vt="Ident">clBtnFace</property>
 								<property name="CtrlStyle" vt="Int32">1342373888</property>
 								<property name="CtrlExStyle" vt="Int8">0</property>
@@ -539,7 +523,7 @@
 								<property name="CtrlStyle" vt="Int32">1342308359</property>
 								<property name="CtrlExStyle" vt="Int8">0</property>
 								<property name="Caption" vt="String">What should I gut when in need?</property>
-								<property name="TabOrder" vt="Int8">8</property>
+								<property name="TabOrder" vt="Int8">7</property>
 								<property name="Resizing" vt="Set"/>
 							</properties>
 							<components>
@@ -688,6 +672,51 @@
 										<property name="Caption" vt="String">Yellow Perch</property>
 										<property name="TabOrder" vt="Int8">9</property>
 										<property name="CtrlStyle" vt="Int32">1342242819</property>
+										<property name="CtrlExStyle" vt="Int8">0</property>
+										<property name="Resizing" vt="Set">DockHeight</property>
+									</properties>
+									<components/>
+								</object>
+							</components>
+						</object>
+						<object type="TAGroup" name="Group6">
+							<properties>
+								<property name="Left" vt="Int8">116</property>
+								<property name="Top" vt="Int16">223</property>
+								<property name="Width" vt="Int8">97</property>
+								<property name="Height" vt="Int8">41</property>
+								<property name="CtrlStyle" vt="Int32">1342308359</property>
+								<property name="CtrlExStyle" vt="Int8">0</property>
+								<property name="Caption" vt="String">Up-cycle trouts?</property>
+								<property name="TabOrder" vt="Int8">8</property>
+								<property name="Resizing" vt="Set"/>
+							</properties>
+							<components>
+								<object type="TARadio" name="Radio3">
+									<properties>
+										<property name="Left" vt="Int8">8</property>
+										<property name="Top" vt="Int8">16</property>
+										<property name="Width" vt="Int8">41</property>
+										<property name="Height" vt="Int8">17</property>
+										<property name="Caption" vt="String">Yes</property>
+										<property name="Checked" vt="True">True</property>
+										<property name="TabOrder" vt="Int8">0</property>
+										<property name="TabStop" vt="True">True</property>
+										<property name="CtrlStyle" vt="Int32">1342242825</property>
+										<property name="CtrlExStyle" vt="Int8">0</property>
+										<property name="Resizing" vt="Set">DockHeight</property>
+									</properties>
+									<components/>
+								</object>
+								<object type="TARadio" name="Radio4">
+									<properties>
+										<property name="Left" vt="Int8">56</property>
+										<property name="Top" vt="Int8">16</property>
+										<property name="Width" vt="Int8">113</property>
+										<property name="Height" vt="Int8">17</property>
+										<property name="Caption" vt="String">No</property>
+										<property name="TabOrder" vt="Int8">1</property>
+										<property name="CtrlStyle" vt="Int32">1342242825</property>
 										<property name="CtrlExStyle" vt="Int8">0</property>
 										<property name="Resizing" vt="Set">DockHeight</property>
 									</properties>
