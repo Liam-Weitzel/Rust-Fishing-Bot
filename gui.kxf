@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="windows-1251"?>
 <object type="TAForm" name="Form1">
 	<properties>
-		<property name="Left" vt="Int16">240</property>
-		<property name="Top" vt="Int8">123</property>
+		<property name="Left" vt="Int16">249</property>
+		<property name="Top" vt="Int16">166</property>
 		<property name="Width" vt="Int16">398</property>
-		<property name="Height" vt="Int16">434</property>
+		<property name="Height" vt="Int16">457</property>
 		<property name="Caption" vt="String">Rust Fishing Bot</property>
 		<property name="Color" vt="Ident">clBtnFace</property>
 		<property name="Font.Charset" vt="Ident">DEFAULT_CHARSET</property>
@@ -35,7 +35,7 @@
 				<property name="Left" vt="Int8">8</property>
 				<property name="Top" vt="Int8">8</property>
 				<property name="Width" vt="Int16">369</property>
-				<property name="Height" vt="Int16">377</property>
+				<property name="Height" vt="Int16">401</property>
 				<property name="ActivePage" vt="Ident">TabSheet1</property>
 				<property name="Font.Charset" vt="Ident">DEFAULT_CHARSET</property>
 				<property name="Font.Color" vt="Ident">clWindowText</property>
@@ -63,7 +63,7 @@
 					<components>
 						<object type="TAGroup" name="Group1">
 							<properties>
-								<property name="Left" vt="Int8">12</property>
+								<property name="Left" vt="Int16">156</property>
 								<property name="Top" vt="Int8">7</property>
 								<property name="Width" vt="Int16">201</property>
 								<property name="Height" vt="Int8">105</property>
@@ -226,9 +226,9 @@
 						</object>
 						<object type="TAGroup" name="Group2">
 							<properties>
-								<property name="Left" vt="Int16">220</property>
-								<property name="Top" vt="Int8">127</property>
-								<property name="Width" vt="Int16">129</property>
+								<property name="Left" vt="Int16">156</property>
+								<property name="Top" vt="Int16">223</property>
+								<property name="Width" vt="Int8">121</property>
 								<property name="Height" vt="Int8">57</property>
 								<property name="CtrlStyle" vt="Int32">1342308359</property>
 								<property name="CtrlExStyle" vt="Int8">0</property>
@@ -243,8 +243,10 @@
 										<property name="Top" vt="Int8">16</property>
 										<property name="Width" vt="Int8">113</property>
 										<property name="Height" vt="Int8">17</property>
-										<property name="Caption" vt="String">Fishing village</property>
+										<property name="Caption" vt="String">Fishing base</property>
+										<property name="Checked" vt="True">True</property>
 										<property name="TabOrder" vt="Int8">0</property>
+										<property name="TabStop" vt="True">True</property>
 										<property name="CtrlStyle" vt="Int32">1342242825</property>
 										<property name="CtrlExStyle" vt="Int8">0</property>
 										<property name="Resizing" vt="Set">DockHeight</property>
@@ -257,10 +259,8 @@
 										<property name="Top" vt="Int8">32</property>
 										<property name="Width" vt="Int16">137</property>
 										<property name="Height" vt="Int8">17</property>
-										<property name="Caption" vt="String">Lamo's fishing base</property>
-										<property name="Checked" vt="True">True</property>
+										<property name="Caption" vt="String">Anyhwere else</property>
 										<property name="TabOrder" vt="Int8">1</property>
-										<property name="TabStop" vt="True">True</property>
 										<property name="CtrlStyle" vt="Int32">1342242825</property>
 										<property name="CtrlExStyle" vt="Int8">0</property>
 										<property name="Resizing" vt="Set">DockHeight</property>
@@ -271,9 +271,9 @@
 						</object>
 						<object type="TAGroup" name="Group3">
 							<properties>
-								<property name="Left" vt="Int16">220</property>
-								<property name="Top" vt="Int16">191</property>
-								<property name="Width" vt="Int8">121</property>
+								<property name="Left" vt="Int8">12</property>
+								<property name="Top" vt="Int16">164</property>
+								<property name="Width" vt="Int16">137</property>
 								<property name="Height" vt="Int16">153</property>
 								<property name="CtrlStyle" vt="Int32">1342308359</property>
 								<property name="CtrlExStyle" vt="Int8">0</property>
@@ -400,10 +400,10 @@
 						</object>
 						<object type="TAGroup" name="Group4">
 							<properties>
-								<property name="Left" vt="Int16">220</property>
+								<property name="Left" vt="Int8">12</property>
 								<property name="Top" vt="Int8">7</property>
 								<property name="Width" vt="Int16">137</property>
-								<property name="Height" vt="Int8">113</property>
+								<property name="Height" vt="Int16">153</property>
 								<property name="CtrlStyle" vt="Int32">1342308359</property>
 								<property name="CtrlExStyle" vt="Int8">0</property>
 								<property name="Caption" vt="String">Notifcations?</property>
@@ -430,9 +430,9 @@
 									<properties>
 										<property name="Left" vt="Int8">8</property>
 										<property name="Top" vt="Int8">64</property>
-										<property name="Width" vt="Int8">95</property>
+										<property name="Width" vt="Int8">78</property>
 										<property name="Height" vt="Int8">17</property>
-										<property name="Caption" vt="String">Telegram webhook</property>
+										<property name="Caption" vt="String">Telegram token</property>
 										<property name="TabOrder" vt="Int8">1</property>
 										<property name="HaveVariable" vt="False">False</property>
 										<property name="CtrlStyle" vt="Int32">1342308608</property>
@@ -467,14 +467,42 @@
 									</properties>
 									<components/>
 								</object>
+								<object type="TALabel" name="Label3">
+									<properties>
+										<property name="Left" vt="Int8">8</property>
+										<property name="Top" vt="Int8">104</property>
+										<property name="Width" vt="Int8">86</property>
+										<property name="Height" vt="Int8">17</property>
+										<property name="Caption" vt="String">Telegram chat ID</property>
+										<property name="TabOrder" vt="Int8">4</property>
+										<property name="HaveVariable" vt="False">False</property>
+										<property name="CtrlStyle" vt="Int32">1342308608</property>
+										<property name="CtrlExStyle" vt="Int8">0</property>
+										<property name="Resizing" vt="Set"/>
+									</properties>
+									<components/>
+								</object>
+								<object type="TAInput" name="">
+									<properties>
+										<property name="Left" vt="Int8">8</property>
+										<property name="Top" vt="Int8">120</property>
+										<property name="Width" vt="Int8">121</property>
+										<property name="Height" vt="Int8">21</property>
+										<property name="TabOrder" vt="Int8">5</property>
+										<property name="CtrlStyle" vt="Int32">1342374016</property>
+										<property name="CtrlExStyle" vt="Int16">512</property>
+										<property name="Resizing" vt="Set">DockHeight</property>
+									</properties>
+									<components/>
+								</object>
 							</components>
 						</object>
 						<object type="TAButton" name="Button1">
 							<properties>
 								<property name="Left" vt="Int8">12</property>
-								<property name="Top" vt="Int16">311</property>
-								<property name="Width" vt="Int8">67</property>
-								<property name="Height" vt="Int8">25</property>
+								<property name="Top" vt="Int16">324</property>
+								<property name="Width" vt="Int16">339</property>
+								<property name="Height" vt="Int8">41</property>
 								<property name="Caption" vt="String">Run</property>
 								<property name="TabOrder" vt="Int8">4</property>
 								<property name="Color" vt="Ident">clBtnFace</property>
@@ -486,11 +514,11 @@
 						</object>
 						<object type="TAButton" name="Button2">
 							<properties>
-								<property name="Left" vt="Int8">12</property>
-								<property name="Top" vt="Int16">271</property>
-								<property name="Width" vt="Int8">123</property>
+								<property name="Left" vt="Int16">260</property>
+								<property name="Top" vt="Int16">287</property>
+								<property name="Width" vt="Int8">91</property>
 								<property name="Height" vt="Int8">25</property>
-								<property name="Caption" vt="String">Set up tackle detection</property>
+								<property name="Caption" vt="String">Tackle detection</property>
 								<property name="TabOrder" vt="Int8">5</property>
 								<property name="Color" vt="Ident">clBtnFace</property>
 								<property name="CtrlStyle" vt="Int32">1342373888</property>
@@ -501,8 +529,8 @@
 						</object>
 						<object type="TAButton" name="Button4">
 							<properties>
-								<property name="Left" vt="Int8">12</property>
-								<property name="Top" vt="Int16">231</property>
+								<property name="Left" vt="Int16">156</property>
+								<property name="Top" vt="Int16">287</property>
 								<property name="Width" vt="Int8">99</property>
 								<property name="Height" vt="Int8">25</property>
 								<property name="Caption" vt="String">Autoit setup wizard</property>
@@ -516,7 +544,7 @@
 						</object>
 						<object type="TAGroup" name="Group5">
 							<properties>
-								<property name="Left" vt="Int8">10</property>
+								<property name="Left" vt="Int16">154</property>
 								<property name="Top" vt="Int8">116</property>
 								<property name="Width" vt="Int16">201</property>
 								<property name="Height" vt="Int8">105</property>
@@ -681,9 +709,9 @@
 						</object>
 						<object type="TAGroup" name="Group6">
 							<properties>
-								<property name="Left" vt="Int16">140</property>
+								<property name="Left" vt="Int16">284</property>
 								<property name="Top" vt="Int16">223</property>
-								<property name="Width" vt="Int8">73</property>
+								<property name="Width" vt="Int8">70</property>
 								<property name="Height" vt="Int8">57</property>
 								<property name="CtrlStyle" vt="Int32">1342308359</property>
 								<property name="CtrlExStyle" vt="Int8">0</property>
